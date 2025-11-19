@@ -169,4 +169,24 @@ if (!manifestContent.includes('OPTIONS_PROVIDER_CLASS_NAME')) {
     console.log('Injected OptionsProvider metadata into AndroidManifest.xml');
 }
 
+// 6. Register Plugin in MainActivity.java
+const MAIN_ACTIVITY_PATH = path.join(PACKAGE_PATH, 'MainActivity.java');
+if (fs.existsSync(MAIN_ACTIVITY_PATH)) {
+    let mainActivityContent = fs.readFileSync(MAIN_ACTIVITY_PATH, 'utf8');
+    if (!mainActivityContent.includes('GoogleCastPlugin.class')) {
+        const onCreateBlock = `
+    @Override
+    public void onCreate(android.os.Bundle savedInstanceState) {
+        registerPlugin(GoogleCastPlugin.class);
+        super.onCreate(savedInstanceState);
+    }
+`;
+        // Inject inside class by checking for the closing brace of the class
+        // Note: This is a simple injection, assuming the last brace is the class closing brace.
+        mainActivityContent = mainActivityContent.replace(/}\s*$/, `${onCreateBlock}\n}`);
+        fs.writeFileSync(MAIN_ACTIVITY_PATH, mainActivityContent);
+        console.log('Registered GoogleCastPlugin in MainActivity.java');
+    }
+}
+
 console.log('--- INJECTION COMPLETE ---');
