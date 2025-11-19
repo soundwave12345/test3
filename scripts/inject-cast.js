@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 // --- CONFIGURATION ---
 const PACKAGE_PATH = 'android/app/src/main/java/com/subsonic/geministreamer';
