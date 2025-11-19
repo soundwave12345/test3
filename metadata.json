@@ -1,0 +1,5 @@
+{
+  "name": "version 2",
+  "description": "A mobile-first Subsonic music client featuring Gemini-powered voice announcements and a sleek dark UI.",
+  "requestFramePermissions": []
+}
